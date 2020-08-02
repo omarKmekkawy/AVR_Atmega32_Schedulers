@@ -1,11 +1,12 @@
 # Atmega32_Co_Sch [03/08/2020]
-Simple Co-operative scheduler based on [Patterns for time triggered embedded systems]
+
+This project is an Atmega32 modified Co-operative scheduler based on [Patterns for time triggered embedded systems] reference. The reference illustrate the code in details, so its recommended to have an idea about the basics.
 
 <img src="https://github.com/rxtxinv/AVR_Atmega32_Schedulers/raw/master/Images/Kit.jpg" height="500" width="900">
 
 ## Getting Started
 
-The scheduler uses Timer1 as a Ticking source, the timer ticks every 1ms @ F_CPU = 8,000,000 MHz. Every tick, the scheduler updates the tasks defined data structure with timing and the dispatcher loops until the task is about to run.
+The scheduler uses Timer1 as a Ticking source, the timer ticks every 1ms @ F_CPU = 8,000,000 MHz. Every tick, the scheduler updates the tasks defined data structure with timings and the dispatcher in the super loop loops until the task is about to run.
 
 In the [main.c](https://github.com/rxtxinv/AVR_Atmega32_Schedulers/blob/master/Atmega32_Co_Sch/main.c) file, I have created 3 tasks as follows:
 
