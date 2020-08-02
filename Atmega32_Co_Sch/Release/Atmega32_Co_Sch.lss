@@ -1,0 +1,353 @@
+
+Atmega32_Co_Sch.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000002a2  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .bss          0000001c  00800060  00800060  00000316  2**0
+                  ALLOC
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+   8:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+   c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  10:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  14:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  18:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  1c:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__vector_7>
+  20:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  24:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  28:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  2c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  30:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  34:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  38:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  3c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  40:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  44:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  48:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  4c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  50:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_clear_bss>:
+  60:	10 e0       	ldi	r17, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	01 c0       	rjmp	.+2      	; 0x6a <.do_clear_bss_start>
+
+00000068 <.do_clear_bss_loop>:
+  68:	1d 92       	st	X+, r1
+
+0000006a <.do_clear_bss_start>:
+  6a:	ac 37       	cpi	r26, 0x7C	; 124
+  6c:	b1 07       	cpc	r27, r17
+  6e:	e1 f7       	brne	.-8      	; 0x68 <.do_clear_bss_loop>
+  70:	0e 94 27 01 	call	0x24e	; 0x24e <main>
+  74:	0c 94 4f 01 	jmp	0x29e	; 0x29e <_exit>
+
+00000078 <__bad_interrupt>:
+  78:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000007c <SCH_Start>:
+  7c:	78 94       	sei
+  7e:	08 95       	ret
+
+00000080 <SCH_Update>:
+  80:	e1 e6       	ldi	r30, 0x61	; 97
+  82:	f0 e0       	ldi	r31, 0x00	; 0
+  84:	80 81       	ld	r24, Z
+  86:	91 81       	ldd	r25, Z+1	; 0x01
+  88:	89 2b       	or	r24, r25
+  8a:	79 f0       	breq	.+30     	; 0xaa <SCH_Update+0x2a>
+  8c:	82 81       	ldd	r24, Z+2	; 0x02
+  8e:	93 81       	ldd	r25, Z+3	; 0x03
+  90:	00 97       	sbiw	r24, 0x00	; 0
+  92:	41 f4       	brne	.+16     	; 0xa4 <SCH_Update+0x24>
+  94:	86 81       	ldd	r24, Z+6	; 0x06
+  96:	8f 5f       	subi	r24, 0xFF	; 255
+  98:	86 83       	std	Z+6, r24	; 0x06
+  9a:	87 81       	ldd	r24, Z+7	; 0x07
+  9c:	90 85       	ldd	r25, Z+8	; 0x08
+  9e:	00 97       	sbiw	r24, 0x00	; 0
+  a0:	21 f0       	breq	.+8      	; 0xaa <SCH_Update+0x2a>
+  a2:	01 c0       	rjmp	.+2      	; 0xa6 <SCH_Update+0x26>
+  a4:	01 97       	sbiw	r24, 0x01	; 1
+  a6:	93 83       	std	Z+3, r25	; 0x03
+  a8:	82 83       	std	Z+2, r24	; 0x02
+  aa:	39 96       	adiw	r30, 0x09	; 9
+  ac:	80 e0       	ldi	r24, 0x00	; 0
+  ae:	ec 37       	cpi	r30, 0x7C	; 124
+  b0:	f8 07       	cpc	r31, r24
+  b2:	41 f7       	brne	.-48     	; 0x84 <SCH_Update+0x4>
+  b4:	08 95       	ret
+
+000000b6 <__vector_7>:
+  b6:	1f 92       	push	r1
+  b8:	0f 92       	push	r0
+  ba:	0f b6       	in	r0, 0x3f	; 63
+  bc:	0f 92       	push	r0
+  be:	11 24       	eor	r1, r1
+  c0:	2f 93       	push	r18
+  c2:	3f 93       	push	r19
+  c4:	4f 93       	push	r20
+  c6:	5f 93       	push	r21
+  c8:	6f 93       	push	r22
+  ca:	7f 93       	push	r23
+  cc:	8f 93       	push	r24
+  ce:	9f 93       	push	r25
+  d0:	af 93       	push	r26
+  d2:	bf 93       	push	r27
+  d4:	ef 93       	push	r30
+  d6:	ff 93       	push	r31
+  d8:	0e 94 40 00 	call	0x80	; 0x80 <SCH_Update>
+  dc:	ff 91       	pop	r31
+  de:	ef 91       	pop	r30
+  e0:	bf 91       	pop	r27
+  e2:	af 91       	pop	r26
+  e4:	9f 91       	pop	r25
+  e6:	8f 91       	pop	r24
+  e8:	7f 91       	pop	r23
+  ea:	6f 91       	pop	r22
+  ec:	5f 91       	pop	r21
+  ee:	4f 91       	pop	r20
+  f0:	3f 91       	pop	r19
+  f2:	2f 91       	pop	r18
+  f4:	0f 90       	pop	r0
+  f6:	0f be       	out	0x3f, r0	; 63
+  f8:	0f 90       	pop	r0
+  fa:	1f 90       	pop	r1
+  fc:	18 95       	reti
+
+000000fe <SCH_Add_Task>:
+  fe:	ff 92       	push	r15
+ 100:	0f 93       	push	r16
+ 102:	1f 93       	push	r17
+ 104:	cf 93       	push	r28
+ 106:	df 93       	push	r29
+ 108:	ec 01       	movw	r28, r24
+ 10a:	8a 01       	movw	r16, r20
+ 10c:	a9 01       	movw	r20, r18
+ 10e:	a1 e6       	ldi	r26, 0x61	; 97
+ 110:	b0 e0       	ldi	r27, 0x00	; 0
+ 112:	e0 e0       	ldi	r30, 0x00	; 0
+ 114:	f0 e0       	ldi	r31, 0x00	; 0
+ 116:	fe 2e       	mov	r15, r30
+ 118:	9f 01       	movw	r18, r30
+ 11a:	8d 91       	ld	r24, X+
+ 11c:	9c 91       	ld	r25, X
+ 11e:	11 97       	sbiw	r26, 0x01	; 1
+ 120:	89 2b       	or	r24, r25
+ 122:	29 f0       	breq	.+10     	; 0x12e <SCH_Add_Task+0x30>
+ 124:	31 96       	adiw	r30, 0x01	; 1
+ 126:	19 96       	adiw	r26, 0x09	; 9
+ 128:	e4 30       	cpi	r30, 0x04	; 4
+ 12a:	f1 05       	cpc	r31, r1
+ 12c:	a1 f7       	brne	.-24     	; 0x116 <SCH_Add_Task+0x18>
+ 12e:	83 e0       	ldi	r24, 0x03	; 3
+ 130:	f8 16       	cp	r15, r24
+ 132:	21 f4       	brne	.+8      	; 0x13c <SCH_Add_Task+0x3e>
+ 134:	81 e0       	ldi	r24, 0x01	; 1
+ 136:	80 93 60 00 	sts	0x0060, r24
+ 13a:	13 c0       	rjmp	.+38     	; 0x162 <SCH_Add_Task+0x64>
+ 13c:	f9 01       	movw	r30, r18
+ 13e:	83 e0       	ldi	r24, 0x03	; 3
+ 140:	ee 0f       	add	r30, r30
+ 142:	ff 1f       	adc	r31, r31
+ 144:	8a 95       	dec	r24
+ 146:	e1 f7       	brne	.-8      	; 0x140 <SCH_Add_Task+0x42>
+ 148:	e2 0f       	add	r30, r18
+ 14a:	f3 1f       	adc	r31, r19
+ 14c:	ef 59       	subi	r30, 0x9F	; 159
+ 14e:	ff 4f       	sbci	r31, 0xFF	; 255
+ 150:	d1 83       	std	Z+1, r29	; 0x01
+ 152:	c0 83       	st	Z, r28
+ 154:	73 83       	std	Z+3, r23	; 0x03
+ 156:	62 83       	std	Z+2, r22	; 0x02
+ 158:	50 87       	std	Z+8, r21	; 0x08
+ 15a:	47 83       	std	Z+7, r20	; 0x07
+ 15c:	15 83       	std	Z+5, r17	; 0x05
+ 15e:	04 83       	std	Z+4, r16	; 0x04
+ 160:	16 82       	std	Z+6, r1	; 0x06
+ 162:	8f 2d       	mov	r24, r15
+ 164:	df 91       	pop	r29
+ 166:	cf 91       	pop	r28
+ 168:	1f 91       	pop	r17
+ 16a:	0f 91       	pop	r16
+ 16c:	ff 90       	pop	r15
+ 16e:	08 95       	ret
+
+00000170 <SCH_Delete_Task>:
+ 170:	28 2f       	mov	r18, r24
+ 172:	30 e0       	ldi	r19, 0x00	; 0
+ 174:	f9 01       	movw	r30, r18
+ 176:	43 e0       	ldi	r20, 0x03	; 3
+ 178:	ee 0f       	add	r30, r30
+ 17a:	ff 1f       	adc	r31, r31
+ 17c:	4a 95       	dec	r20
+ 17e:	e1 f7       	brne	.-8      	; 0x178 <SCH_Delete_Task+0x8>
+ 180:	e2 0f       	add	r30, r18
+ 182:	f3 1f       	adc	r31, r19
+ 184:	ef 59       	subi	r30, 0x9F	; 159
+ 186:	ff 4f       	sbci	r31, 0xFF	; 255
+ 188:	80 81       	ld	r24, Z
+ 18a:	91 81       	ldd	r25, Z+1	; 0x01
+ 18c:	89 2b       	or	r24, r25
+ 18e:	11 f0       	breq	.+4      	; 0x194 <SCH_Delete_Task+0x24>
+ 190:	80 e0       	ldi	r24, 0x00	; 0
+ 192:	04 c0       	rjmp	.+8      	; 0x19c <SCH_Delete_Task+0x2c>
+ 194:	82 e0       	ldi	r24, 0x02	; 2
+ 196:	80 93 60 00 	sts	0x0060, r24
+ 19a:	81 e0       	ldi	r24, 0x01	; 1
+ 19c:	f9 01       	movw	r30, r18
+ 19e:	93 e0       	ldi	r25, 0x03	; 3
+ 1a0:	ee 0f       	add	r30, r30
+ 1a2:	ff 1f       	adc	r31, r31
+ 1a4:	9a 95       	dec	r25
+ 1a6:	e1 f7       	brne	.-8      	; 0x1a0 <SCH_Delete_Task+0x30>
+ 1a8:	e2 0f       	add	r30, r18
+ 1aa:	f3 1f       	adc	r31, r19
+ 1ac:	ef 59       	subi	r30, 0x9F	; 159
+ 1ae:	ff 4f       	sbci	r31, 0xFF	; 255
+ 1b0:	11 82       	std	Z+1, r1	; 0x01
+ 1b2:	10 82       	st	Z, r1
+ 1b4:	13 82       	std	Z+3, r1	; 0x03
+ 1b6:	12 82       	std	Z+2, r1	; 0x02
+ 1b8:	15 82       	std	Z+5, r1	; 0x05
+ 1ba:	14 82       	std	Z+4, r1	; 0x04
+ 1bc:	16 82       	std	Z+6, r1	; 0x06
+ 1be:	08 95       	ret
+
+000001c0 <SCH_Init_T1>:
+ 1c0:	80 e0       	ldi	r24, 0x00	; 0
+ 1c2:	0e 94 b8 00 	call	0x170	; 0x170 <SCH_Delete_Task>
+ 1c6:	81 e0       	ldi	r24, 0x01	; 1
+ 1c8:	0e 94 b8 00 	call	0x170	; 0x170 <SCH_Delete_Task>
+ 1cc:	82 e0       	ldi	r24, 0x02	; 2
+ 1ce:	0e 94 b8 00 	call	0x170	; 0x170 <SCH_Delete_Task>
+ 1d2:	8e b5       	in	r24, 0x2e	; 46
+ 1d4:	88 60       	ori	r24, 0x08	; 8
+ 1d6:	8e bd       	out	0x2e, r24	; 46
+ 1d8:	1d bc       	out	0x2d, r1	; 45
+ 1da:	1c bc       	out	0x2c, r1	; 44
+ 1dc:	8f e3       	ldi	r24, 0x3F	; 63
+ 1de:	9f e1       	ldi	r25, 0x1F	; 31
+ 1e0:	9b bd       	out	0x2b, r25	; 43
+ 1e2:	8a bd       	out	0x2a, r24	; 42
+ 1e4:	89 b7       	in	r24, 0x39	; 57
+ 1e6:	80 61       	ori	r24, 0x10	; 16
+ 1e8:	89 bf       	out	0x39, r24	; 57
+ 1ea:	8e b5       	in	r24, 0x2e	; 46
+ 1ec:	81 60       	ori	r24, 0x01	; 1
+ 1ee:	8e bd       	out	0x2e, r24	; 46
+ 1f0:	08 95       	ret
+
+000001f2 <SCH_Dispatch_Tasks>:
+ 1f2:	1f 93       	push	r17
+ 1f4:	cf 93       	push	r28
+ 1f6:	df 93       	push	r29
+ 1f8:	c1 e6       	ldi	r28, 0x61	; 97
+ 1fa:	d0 e0       	ldi	r29, 0x00	; 0
+ 1fc:	10 e0       	ldi	r17, 0x00	; 0
+ 1fe:	8e 81       	ldd	r24, Y+6	; 0x06
+ 200:	88 23       	and	r24, r24
+ 202:	69 f0       	breq	.+26     	; 0x21e <SCH_Dispatch_Tasks+0x2c>
+ 204:	e8 81       	ld	r30, Y
+ 206:	f9 81       	ldd	r31, Y+1	; 0x01
+ 208:	09 95       	icall
+ 20a:	8e 81       	ldd	r24, Y+6	; 0x06
+ 20c:	81 50       	subi	r24, 0x01	; 1
+ 20e:	8e 83       	std	Y+6, r24	; 0x06
+ 210:	8c 81       	ldd	r24, Y+4	; 0x04
+ 212:	9d 81       	ldd	r25, Y+5	; 0x05
+ 214:	89 2b       	or	r24, r25
+ 216:	19 f4       	brne	.+6      	; 0x21e <SCH_Dispatch_Tasks+0x2c>
+ 218:	81 2f       	mov	r24, r17
+ 21a:	0e 94 b8 00 	call	0x170	; 0x170 <SCH_Delete_Task>
+ 21e:	1f 5f       	subi	r17, 0xFF	; 255
+ 220:	29 96       	adiw	r28, 0x09	; 9
+ 222:	13 30       	cpi	r17, 0x03	; 3
+ 224:	61 f7       	brne	.-40     	; 0x1fe <SCH_Dispatch_Tasks+0xc>
+ 226:	df 91       	pop	r29
+ 228:	cf 91       	pop	r28
+ 22a:	1f 91       	pop	r17
+ 22c:	08 95       	ret
+
+0000022e <SCH_Report_Status>:
+ 22e:	08 95       	ret
+
+00000230 <SCH_Go_To_Sleep>:
+ 230:	08 95       	ret
+
+00000232 <LED_Flash_Update1>:
+ 232:	82 b3       	in	r24, 0x12	; 18
+ 234:	80 58       	subi	r24, 0x80	; 128
+ 236:	82 bb       	out	0x12, r24	; 18
+ 238:	08 95       	ret
+
+0000023a <LED_Flash_Update2>:
+ 23a:	82 b3       	in	r24, 0x12	; 18
+ 23c:	90 e4       	ldi	r25, 0x40	; 64
+ 23e:	89 27       	eor	r24, r25
+ 240:	82 bb       	out	0x12, r24	; 18
+ 242:	08 95       	ret
+
+00000244 <LED_Flash_Update3>:
+ 244:	82 b3       	in	r24, 0x12	; 18
+ 246:	90 e2       	ldi	r25, 0x20	; 32
+ 248:	89 27       	eor	r24, r25
+ 24a:	82 bb       	out	0x12, r24	; 18
+ 24c:	08 95       	ret
+
+0000024e <main>:
+ 24e:	81 b3       	in	r24, 0x11	; 17
+ 250:	80 6e       	ori	r24, 0xE0	; 224
+ 252:	81 bb       	out	0x11, r24	; 17
+ 254:	0e 94 e0 00 	call	0x1c0	; 0x1c0 <SCH_Init_T1>
+ 258:	89 e1       	ldi	r24, 0x19	; 25
+ 25a:	91 e0       	ldi	r25, 0x01	; 1
+ 25c:	60 e0       	ldi	r22, 0x00	; 0
+ 25e:	70 e0       	ldi	r23, 0x00	; 0
+ 260:	41 e0       	ldi	r20, 0x01	; 1
+ 262:	50 e0       	ldi	r21, 0x00	; 0
+ 264:	22 e3       	ldi	r18, 0x32	; 50
+ 266:	30 e0       	ldi	r19, 0x00	; 0
+ 268:	0e 94 7f 00 	call	0xfe	; 0xfe <SCH_Add_Task>
+ 26c:	8d e1       	ldi	r24, 0x1D	; 29
+ 26e:	91 e0       	ldi	r25, 0x01	; 1
+ 270:	60 e0       	ldi	r22, 0x00	; 0
+ 272:	70 e0       	ldi	r23, 0x00	; 0
+ 274:	41 e0       	ldi	r20, 0x01	; 1
+ 276:	50 e0       	ldi	r21, 0x00	; 0
+ 278:	24 ef       	ldi	r18, 0xF4	; 244
+ 27a:	31 e0       	ldi	r19, 0x01	; 1
+ 27c:	0e 94 7f 00 	call	0xfe	; 0xfe <SCH_Add_Task>
+ 280:	82 e2       	ldi	r24, 0x22	; 34
+ 282:	91 e0       	ldi	r25, 0x01	; 1
+ 284:	60 e0       	ldi	r22, 0x00	; 0
+ 286:	70 e0       	ldi	r23, 0x00	; 0
+ 288:	41 e0       	ldi	r20, 0x01	; 1
+ 28a:	50 e0       	ldi	r21, 0x00	; 0
+ 28c:	28 ee       	ldi	r18, 0xE8	; 232
+ 28e:	33 e0       	ldi	r19, 0x03	; 3
+ 290:	0e 94 7f 00 	call	0xfe	; 0xfe <SCH_Add_Task>
+ 294:	0e 94 3e 00 	call	0x7c	; 0x7c <SCH_Start>
+ 298:	0e 94 f9 00 	call	0x1f2	; 0x1f2 <SCH_Dispatch_Tasks>
+ 29c:	fd cf       	rjmp	.-6      	; 0x298 <main+0x4a>
+
+0000029e <_exit>:
+ 29e:	f8 94       	cli
+
+000002a0 <__stop_program>:
+ 2a0:	ff cf       	rjmp	.-2      	; 0x2a0 <__stop_program>
