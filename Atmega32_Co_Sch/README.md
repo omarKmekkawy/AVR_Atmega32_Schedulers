@@ -1,4 +1,4 @@
-# Atmega32_Co_Sch
+# Atmega32_Co_Sch [03/08/2020]
 Simple Co-operative scheduler based on [Patterns for time triggered embedded systems]
 
 <img src="https://github.com/rxtxinv/AVR_Atmega32_Schedulers/raw/master/Images/Kit.jpg" height="500" width="900">
