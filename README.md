@@ -4,7 +4,7 @@ This repository for schedulers based on Atmega32
 <img src="https://github.com/rxtxinv/AVR_Atmega32_Schedulers/raw/master/Images/Kit.jpg" height="500" width="900">
 
 ## Getting Started
-In this repository, I will create new scheduler projects for the ATmega32 microcontroller.
+In this repository, I will work on modifying all the schedulers codes in the [Patterns for time triggered embedded system]'s reference to work on Atmega32 instead of the 8051.
 
 ### Prerequisites
 * Eclipse IDE with AVR plugin installed.
